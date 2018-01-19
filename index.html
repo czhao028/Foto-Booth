@@ -1,3 +1,8 @@
+<!--DEBUG: code is asynchronous
+checkbox on image-click https://stackoverflow.com/questions/30663562/use-images-like-checkboxes
+DEBUG: process log, window not defined
+-->
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,10 +10,18 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://bootswatch.com/4/litera/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="./css/facebook-style.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+  <script src="https://www.promisejs.org/polyfills/promise-7.0.4.min.js"></script>
+  <!--<script type="text/javascript" src = "facebook-sql.js"></script>-->
+  <!--<script type="text/javascript" src = "load-facebooksdk.js"></script>-->
+  <script src="./load-facebooksdk_browserfied.js"></script>
 </head>
 <body>
+    
+    
 	<!--NAVIGATION BAR-->
 	<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
 	  <a class="navbar-brand" href="#">Foto Booth</a>
@@ -44,39 +57,7 @@
 	  </p>
 	</div>	
 
-	<!--Basic Info about Foto Booth-->
-	<!--<div class="card mb-3">
-	  <h3 class="card-header">Card header</h3>
-	  <div class="card-body">
-	    <h5 class="card-title">Special title treatment</h5>
-	    <h6 class="card-subtitle text-muted">Support card subtitle</h6>
-	  </div>
-	  <img style="height:auto; width: 90%; margin-left: auto; margin-right:auto; display: block;" src="facebook.png">
-	  <div class="card-body">
-	    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-	  </div>
-	  <ul class="list-group list-group-flush">
-	    <li class="list-group-item">Cras justo odio</li>
-	    <li class="list-group-item">Dapibus ac facilisis in</li>
-	    <li class="list-group-item">Vestibulum at eros</li>
-	  </ul>
-	  <div class="card-body">
-	    <a href="#" class="card-link">Card link</a>
-	    <a href="#" class="card-link">Another link</a>
-	  </div>
-	  <div class="card-footer text-muted">
-	    2 days ago
-	  </div>
-	</div>
-	<div class="card">
-	  <div class="card-body">
-	    <h4 class="card-title">Card title</h4>
-	    <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
-	    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-	    <a href="#" class="card-link">Card link</a>
-	    <a href="#" class="card-link">Another link</a>
-	  </div>
-	</div>-->
+    <!--INFOBOXES-->
 	<h1 style="text-align:center;">Your Facebook Photo Hub</h1><br>
 	<div id = "first container" style = "margin: 0 auto; display:flex; justify-content:center;">
 		<div class="card text-white bg-primary mb-3" style= "max-width: 20rem; display: inline-block;">
@@ -84,8 +65,7 @@
 		  <div class="card-body">
 		    <h4 class="card-title">Log in with Facebook</h4>
 		    <p class="card-text">Our website uses Facebook Graph API in order to access your albums and photos.</p>
-		    <p style = "text-align:center;"><img src = "https://www.junkart.in/images/facebook_button_pressed.png" style = 
-		    "max-width: 15rem;"></p>
+		    <p style = "text-align:center;"><img src = "https://upload.wikimedia.org/wikipedia/commons/thumb/0/04/MoA-Facebook.svg/2000px-MoA-Facebook.svg.png" style = "width:75%; height:75%;"></p>
 		  </div>
 		</div>
 		<div class="card text-white bg-secondary mb-3" style="max-width: 20rem; display: inline-block; margin-left: 10px;">
@@ -93,55 +73,100 @@
 		  <div class="card-body">
 		    <h4 class="card-title">Album View</h4>
 		    <p class="card-text">Foto Booth queues up all your published albums with their cover photo, all in one space.</p>
-		    <p style = "text-align:center;"><img src = "photos.png" style = "height:auto; width: auto;"></p>
+		    <p style = "text-align:center;"><img src = "http://arwebzone.com/wp-content/uploads/2014/03/Download-Facebook-Albums.png" style = "height:100%; width:100%;"></p>
 		  </div>
 		</div>	
 		<div class="card text-white bg-success mb-3" style="max-width: 20rem; display:inline-block; margin-left: 10px;">
 		  <div class="card-header">Step 3</div>
 		  <div class="card-body">
 		    <h4 class="card-title">Finish</h4>
-		    <p class="card-text">In less than a minute, you've arrived at step 3. Foto Booth makes it quick and easy to rapidly download any album you have. Click on the album to zip your photos straight to your computer.</p>
+		    <p class="card-text">In less than a minute, you've arrived at step 3. Click on the album to zip your photos straight to your computer.</p>
+		    <p style = "text-align:center;"><img src = http://icons.iconarchive.com/icons/dtafalonso/android-lollipop/512/Downloads-icon.png style = "width:50%; height: 50%;"></p>
 		  </div>
 		</div>	
 	</div>	
-	<h2 style="text-align:center;"> Continue now for stress-free downloads</h2>
+	<h2 style="text-align:center;"> Continue now for stress-free downloads</h2><br>
 
-	<script>
-        window.fbAsyncInit = function() {
-            FB.init({
-              appId      : '1542369645823122',
-              cookie     : true,
-              xfbml      : true,
-              version    : 'v2.11'
-            });
-          
-        FB.AppEvents.logPageView();   
-          
-        };
-    </script>
-    
-    <div id="fb-root"></div>
-    <script>(function(d, s, id) {
-      var js, fjs = d.getElementsByTagName(s)[0];
-      if (d.getElementById(id)) return;
-      js = d.createElement(s); js.id = id;
-      js.src = 'https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.11&appId=1542369645823122';
-      fjs.parentNode.insertBefore(js, fjs);
-    }(document, 'script', 'facebook-jssdk'));</script>
-    
     <script>
-    function checkLoginState() {
-        FB.getLoginStatus(function(response) {
-              if (response.status === 'connected') {
-                var accessToken = 'EAAV6xuraBJIBAFvUJhzw5MtaPWW80BAdWYinKnI3XMdjvC6g6ETdR22HZBZAIUZBU7sgAglfosfZAHWhzMI5MeatZA2b9uWmrjWhaEk0NZAmotsbPAe7ZA3wG9uLRtqYhTjfbZA1glfLBqDGRPqxyrJ1ERE9WiTjBNd6fxQJW1URdUyeJvtzmc4RMXFAXSruTIZAry62e5wqfHgZDZD';
-                //var accessToken = response.authResponse.accessToken;
-                console.log(accessToken);
-              } 
-        });
+    
+    overall_albums = null;
+    //NEXT TO DO: store together into a list, figure out how to download pictures from link
+    //https://gist.github.com/noelvo/4502eea719f83270c8e9
+    
+    function displayAlbums(){
+        
+        all_albums = [
+            {
+                'name':'Timeline Photos',
+                'cover_photo':'https://scontent-ort2-2.xx.fbcdn.net/v/t1.0-9/17634303_1874239819532514_8644146369447400144_n.jpg?oh=43c6ce933433d0a7519d0baaa2c51113&oe=5AFBF414',
+                'photos':['https://scontent-ort2-2.xx.fbcdn.net/v/t1.0-9/17634303_1874239819532514_8644146369447400144_n.jpg?oh=43c6ce933433d0a7519d0baaa2c51113&oe=5AFBF414','https://scontent-ort2-2.xx.fbcdn.net/v/t1.0-9/16473715_1847863328836830_6571888747179362375_n.jpg?oh=6e496b8a76d4e034fb33d11a38c5c1f5&oe=5AFE2992' ],
+            },
+            {
+                'name':'Cover Photos',
+                'cover_photo':'https://scontent-ort2-2.xx.fbcdn.net/v/t1.0-9/16473715_1847863328836830_6571888747179362375_n.jpg?oh=6e496b8a76d4e034fb33d11a38c5c1f5&oe=5AFE2992',
+                'photos':[],
+            },
+            {
+                'name': 'Featured Photos',
+                'cover_photo': 'https://scontent-iad3-1.xx.fbcdn.net/v/t1.0-9/13450177_1731852527104578_4902045573470892246_n.jpg?oh=2fa0aa056d483364a8460630bd32e927&oe=5AFE0EAA',
+                'photos': []
+            },
+            {
+                'name': 'Profile Pictures',
+                'cover_photo': 'https://scontent-iad3-1.xx.fbcdn.net/v/t31.0-8/18278917_1894589447497551_4159261863597356989_o.jpg?oh=c95f39bbff0d9c7b9f95a23b74dbfabd&oe=5AF0FA2A',
+                'photos': []
+            }
+        ]
+        
+        //all_albums = getAlbums();
+        for(var index = 0; index < all_albums.length; index++){
+            document.getElementById('albumDisplay').innerHTML += '<input type="checkbox" id="myCheckbox'+index+'" /><label for="myCheckbox'+index+'"><img class = "album-display" id = "img_' + index + '" src="'+all_albums[index].cover_photo+'"></label>'
+        }
+        
+        document.getElementById("downloadButtons").style = "display:flex; justify-content:center";
+        overall_albums = all_albums;
+        
     }
+    
+    function downloadSelectedURLS(){
+        var urls = []
+        var checkboxes = $("div :checkbox")
+        for(var i = 0; i < checkboxes.length; i++){
+            if(checkboxes[i].checked){
+                coverphotolink = document.getElementById("img_" + i).src
+                for(var j = 0; j < all_albums.length; j++){
+                    if(all_albums[j].cover_photo == coverphotolink){
+                        urls.concat(all_albums[j].photos);
+                    }
+                }
+            }
+        }
+        downloadPhotos(urls);
+    }
+    
+    function downloadAllURLS(){
+        var urls = []
+        for(var j = 0; j < all_albums.length; j++){
+            urls.concat(all_albums[j].photos);
+        }
+        downloadPhotos(urls);
+    }
+    
+    
+    
     </script>
-    <a href = "javascript:void(0);" id = "beginPics">Click to Download Album</a>
-    <div class="fb-login-button" data-max-rows="1" data-size="large" data-button-type="continue_with" data-show-faces="false" data-auto-logout-link="true" data-use-continue-as="true" onlogin="checkLoginState();"></div>
-
+    
+    <div style = "margin: 0 auto; display:flex; justify-content:center;">
+        <div class="fb-login-button" id = "fb-login-button" scope= "public_profile,email,user_photos" data-max-rows="1" data-size="large" data-button-type="login_with" data-show-faces="false" data-auto-logout-link="true" data-use-continue-as="true" onlogin = "checkLoginState();"></div>
+    </div>
+    <button id = "beginPics" type="button" class="btn btn-primary btn-lg btn-block" style = "display:none;" onclick = "displayAlbums();">Click to Display Albums</button><br>
+    <div id = "welcomeBack"></div>
+    <div id = albumDisplay style = "display:flex; justify-content:center;"> </div>
+    <div id = "downloadButtons" style = "display:none;">
+        <button type="button" class="btn btn-secondary" onclick = "downloadSelectedURLS();">Download Selected</button>
+        <button type="button" class="btn btn-secondary" onlick = "downloadAllURLS();" style = "margin-left: 10px;">Download All Photos</button>
+    </div>
+    <div id = "footerpad" style = "padding-bottom:10%;"></div>
+    
 </body>
 </html>

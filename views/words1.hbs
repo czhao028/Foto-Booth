@@ -1,0 +1,66 @@
+
+
+<!doctype html>
+<html>
+
+<head>
+    <title>Christine's Word Checker</title>
+</head>
+
+<body>
+    <div class="wrapper">
+      <div class="container">
+        <div class="content">
+          <ul>
+             Hi {{user}}! <br>
+             Visited {{times}} number of times. <br>
+            <a href = {{login_link}}>Log in to Ion!</a> <br> <br>
+            <div id = "inputs">Letters:  &nbsp; </div> <br>
+            <button id = "button" href = "javascript:void(0)">Click to check!</a></button><br>
+            <div id = "outputs"></div>
+          </ul>
+          <br>
+        </div>
+      </div>
+    </div>
+    <script>
+        function render_inputbars(){
+            out = "";
+            for(var i = 0; i < 7; i++){
+                out += '<input id = "input_' + i +  '" type = "text" style = "width:15px">';
+            }
+            console.log(out);
+            document.getElementById("inputs").innerHTML += out;
+        }
+        render_inputbars();
+    </script>
+
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+    <script>
+    $( document ).ready(function() {
+        // link click function
+              
+        $("button").click(function(){
+            text = ""
+            for(var i = 0; i < 7; i++){
+                text += String(document.getElementById('input_'+i).value);
+                console.log(text + i);
+            }
+            $.get( "processletters", {letters:text})
+                .done(function( data ) {
+                    document.getElementById("outputs").innerHTML = 'Letters: ' + data
+                });
+        });        
+        
+        
+    });
+    </script>
+</body>
+
+</html>
+<!--from itertools import *
+def combing(string):
+    comb = list(combinations(string,i+1)for i in range(len(string)))
+    return [''.join(i) for i in comb for ele in i]
+
+print(combing("apple"))-->

@@ -1,0 +1,65 @@
+<!doctype html>
+<html>
+
+<head>
+    <title>Query City</title>
+</head>
+
+<body>
+    <div class="wrapper">
+        <div class="content">
+          <ul>
+             Country: <select id = "countries">
+                <script>returnSelection();</script> 
+             </select>
+             City: <select id = "mySelect">
+                 <option value = "100000">100,000</option>
+                 <option value = "200000">200,000</option>
+                 <option value = "300000">300,000</option>
+                 <option value = "400000">400,000</option>
+                 <option value = "500000">500,000</option>
+                 <option value = "600000">600,000</option>
+                 <option value = "700000">700,000</option>
+                 <option value = "800000">800,000</option>
+                 <option value = "900000">900,000</option>
+                 <option value = "1000000">1,000,000</option>
+             </select>
+             <a href="javascript:void(0);" id = "submitLink">Submit</a>
+          </ul>
+          <br>
+        </div>
+        <div id = "cities">
+            <b>Names:</b><p></p>
+        </div>
+    </div>
+    
+
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+    <script>
+    $( document ).ready(function() {
+        $("#submitLink").click(function(){
+            popThresh = document.getElementById("mySelect").value;
+            console.log(typeof popThresh);
+            $.get( "cityProcess", {population:popThresh})
+                .done(function( data ) {
+                    console.log("done");
+                    d = data.join("<br>");
+                    document.getElementById("cities").innerHTML = d;
+                });
+        });        
+        
+        
+    });
+    function returnSelection(){
+        $.get( "countryQuery")
+            .done(function( data ) {
+                c = document.getElementById("countries");
+                for(name in data){
+                    c.innerHTML+= '<option value = ' + name + '>'+ name + '</option>'
+                }
+        });
+    }
+    </script>
+</body>
+
+</html>
